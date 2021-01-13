@@ -31,15 +31,15 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 class GameScene extends Phaser.Scene {
 
 	constructor() {
-		super({key : 'gameScene'});
+		super({key: 'gameScene'});
 	}
-	
+
 	preload() {
 		this.load.image('player', playerImg)
 		this.load.image('joystick', joystickImg)
 		this.load.image('bullet', bulletImg)
 
-		this.load.plugin('rexvirtualjoystickplugin', rexvirtualjoystickplugin, true)	
+		this.load.plugin('rexvirtualjoystickplugin', rexvirtualjoystickplugin, true)
 	}
 
 	create() {
@@ -48,7 +48,7 @@ class GameScene extends Phaser.Scene {
 		this.player.setCollideWorldBounds(true)
 		this.player.setOrigin(0.5, 0.5) // Set origin for bullet fire start
 		this.player.setScale(.4)
-		
+
 		// Create movement joystick
 		this.movementJoyStick = this.plugins.get('rexvirtualjoystickplugin').add(this.scene, {
 			x: window.innerWidth * 0.1,
@@ -57,8 +57,9 @@ class GameScene extends Phaser.Scene {
 			forceMin: 0,
 			base: this.add.circle(0, 0, 60, 0x888888).setDepth(100).setAlpha(0.25),
 			thumb: this.add.image(0, 0, 'joystick').setDisplaySize(80, 80).setDepth(100).setAlpha(0.5),
-		}).on('update', () => {}, this)
-		
+		}).on('update', () => {
+		}, this)
+
 		// Create shooting joystick
 		this.shootJoyStick = this.plugins.get('rexvirtualjoystickplugin').add(this.scene, {
 			x: window.innerWidth * 0.9,
@@ -67,7 +68,8 @@ class GameScene extends Phaser.Scene {
 			forceMin: 0,
 			base: this.add.circle(0, 0, 60, 0x888888, 0.5).setDepth(100).setAlpha(0.25),
 			thumb: this.add.image(0, 0, 'joystick').setDisplaySize(80, 80).setDepth(100).setAlpha(0.5),
-		}).on('update', () => {}, this)
+		}).on('update', () => {
+		}, this)
 
 		// Move joysticks dynamically based on pointer-down
 		this.input.on('pointerdown', (pointer) => {
@@ -103,13 +105,13 @@ class GameScene extends Phaser.Scene {
 				this.player.setVelocityX(speed * 1 + this.player.velocity)
 			}
 			if (event.key == 'd') {
-				this.player.setVelocityX(speed * -1  + this.player.velocity)
+				this.player.setVelocityX(speed * -1 + this.player.velocity)
 			}
 			if (event.key == 's') {
 				this.player.setVelocityX(speed * 1 + this.player.velocity)
 			}
 			if (event.key == 'd') {
-				this.player.setVelocityX(speed * -1  + this.player.velocity)
+				this.player.setVelocityX(speed * -1 + this.player.velocity)
 			}
 
 		})
@@ -119,28 +121,28 @@ class GameScene extends Phaser.Scene {
 				this.player.setVelocityX(speed * -1 + this.player.velocity)
 			}
 			if (event.key == 'd') {
-				this.player.setVelocityX(speed * 1  + this.player.velocity)
+				this.player.setVelocityX(speed * 1 + this.player.velocity)
 			}
 			if (event.key == 's') {
 				this.player.setVelocityX(speed * -1 + this.player.velocity)
 			}
 			if (event.key == 'd') {
-				this.player.setVelocityX(speed * 1  + this.player.velocity)
+				this.player.setVelocityX(speed * 1 + this.player.velocity)
 			}
 
 		})
 
-		this.bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true })
+		this.bullets = this.physics.add.group({classType: Bullet, runChildUpdate: true})
 		this.bulletCooldown = 0
 	}
-	
+
 	update(time, delta) {
-		
+
 		this.born += delta
 		if (this.born > 1500) {
 			this.destroy()
 		}
-		
+
 		if (this.bulletCooldown > 0) {
 			// Reduce bullet cooldown
 			this.bulletCooldown -= delta
@@ -175,4 +177,5 @@ class GameScene extends Phaser.Scene {
 
 	}
 }
+
 export default GameScene;
